@@ -2,7 +2,7 @@
 
 # NetTools v1.7
 
-![NetTools](main.png)
+<img src="main.png" width="512" alt="NetTools">
 
 > 基于 **pywebview** 的跨平台网络工具桌面应用，集成 Cisco Packet Tracer 远程控制与 AI 配置生成。
 
