@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetTools</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon"><img id="logo-icon-img" src="" alt="" style="width:28px;height:28px;border-radius:6px;"></span>
+                <span class="logo-text">NetTools</span>
+            </div>
+            <nav class="nav">
+                <button class="nav-item active" data-page="subnet">
+                    <img src="icons/calculate.svg" class="nav-icon" alt="">
+                    <span>子网计算</span>
+                </button>
+                <button class="nav-item" data-page="vlsm">
+                    <img src="icons/hub.svg" class="nav-icon" alt="">
+                    <span>VLSM 划分</span>
+                </button>
+                <button class="nav-item" data-page="query">
+                    <img src="icons/search.svg" class="nav-icon" alt="">
+                    <span>快速查询</span>
+                </button>
+                <button class="nav-item" data-page="bandwidth">
+                    <img src="icons/speed.svg" class="nav-icon" alt="">
+                    <span>带宽换算</span>
+                </button>
+                <button class="nav-item" data-page="portscan">
+                    <img src="icons/lan.svg" class="nav-icon" alt="">
+                    <span>端口扫描</span>
+                </button>
+                <button class="nav-item" data-page="whois">
+                    <img src="icons/language.svg" class="nav-icon" alt="">
+                    <span>IP 归属</span>
+                </button>
+                <button class="nav-item" data-page="ping">
+                    <img src="icons/online_prediction.svg" class="nav-icon" alt="">
+                    <span>Ping 检测</span>
+                </button>
+                <button class="nav-item" data-page="dns">
+                    <img src="icons/dns.svg" class="nav-icon" alt="">
+                    <span>DNS 查询</span>
+                </button>
+                <button class="nav-item" data-page="traceroute">
+                    <img src="icons/alt_route.svg" class="nav-icon" alt="">
+                    <span>路由追踪</span>
+                </button>
+                <button class="nav-item" data-page="hexconv">
+                    <img src="icons/code.svg" class="nav-icon" alt="">
+                    <span>进制转换</span>
+                </button>
+                <button class="nav-item" data-page="ciscomcp">
+                    <img src="icons/router.svg" class="nav-icon" alt="">
+                    <span>思科 MCP</span>
+                </button>
+                <button class="nav-item" data-page="about">
+                    <img src="icons/help.svg" class="nav-icon" alt="">
+                    <span>关于</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="content">
+            <!-- 子网计算 -->
+            <section class="page active" id="page-subnet">
+                <h2>子网计算</h2>
+                <div class="form-row">
+                    <label>网络地址</label>
+                    <input type="text" id="subnet-network" value="192.168.1.0" placeholder="例如: 192.168.1.0">
+                    <label>前缀</label>
+                    <select id="subnet-prefix"></select>
+                </div>
+                <button class="btn-primary" onclick="doSubnetCalc()">计算</button>
+                <div class="output" id="subnet-output"></div>
+            </section>
+
+            <!-- VLSM 划分 -->
+            <section class="page" id="page-vlsm">
+                <h2>VLSM 划分</h2>
+                <div class="form-row">
+                    <label>网络</label>
+                    <input type="text" id="vlsm-network" value="192.168.0.0">
+                    <label>前缀</label>
+                    <select id="vlsm-prefix"></select>
+                </div>
+                <div class="form-row">
+                    <label>主机数 (逗号分隔)</label>
+                    <input type="text" id="vlsm-hosts" value="400, 200, 100, 50, 25">
+                </div>
+                <button class="btn-primary" onclick="doVlsm()">开始划分</button>
+                <div class="output" id="vlsm-output"></div>
+            </section>
+
+            <!-- 快速查询 -->
+            <section class="page" id="page-query">
+                <h2>IP / 域名 快速查询</h2>
+                <div class="form-row">
+                    <label>输入</label>
+                    <input type="text" id="query-input" placeholder="如 8.8.8.8 或 www.google.com">
+                </div>
+                <button class="btn-primary" onclick="doQuery()">查询</button>
+                <div class="output" id="query-output"></div>
+            </section>
+
+            <!-- 带宽换算 -->
+            <section class="page" id="page-bandwidth">
+                <h2>带宽换算</h2>
+                <div class="form-row">
+                    <label>数值</label>
+                    <input type="number" id="bw-value" value="100">
+                    <label>从</label>
+                    <select id="bw-from">
+                        <option>bps</option><option>Kbps</option>
+                        <option selected>Mbps</option><option>Gbps</option><option>Tbps</option>
+                    </select>
+                    <label>到</label>
+                    <select id="bw-to">
+                        <option>bps</option><option selected>Kbps</option>
+                        <option>Mbps</option><option>Gbps</option><option>Tbps</option>
+                    </select>
+                </div>
+                <button class="btn-primary" onclick="doBwConvert()">换算</button>
+                <div class="output" id="bw-output"></div>
+            </section>
+
+            <!-- 端口扫描 -->
+            <section class="page" id="page-portscan">
+                <h2>端口扫描</h2>
+                <div class="form-row">
+                    <label>主机</label>
+                    <input type="text" id="ps-host" value="127.0.0.1">
+                    <label>端口 (逗号)</label>
+                    <input type="text" id="ps-ports" value="22, 80, 443, 3306, 3389">
+                </div>
+                <button class="btn-primary" onclick="doPortScan()">扫描</button>
+                <div class="output" id="ps-output"></div>
+            </section>
+
+            <!-- IP 归属 -->
+            <section class="page" id="page-whois">
+                <h2>IP 归属查询</h2>
+                <div class="form-row">
+                    <label>IP 地址</label>
+                    <input type="text" id="whois-ip" value="8.8.8.8">
+                </div>
+                <button class="btn-primary" onclick="doWhois()">查询</button>
+                <div class="output" id="whois-output"></div>
+            </section>
+
+            <!-- Ping 检测 -->
+            <section class="page" id="page-ping">
+                <h2>Ping 检测</h2>
+                <div class="form-row">
+                    <label>主机</label>
+                    <input type="text" id="ping-host" value="8.8.8.8">
+                    <label>次数</label>
+                    <input type="number" id="ping-count" value="4" min="1" max="100">
+                </div>
+                <button class="btn-primary" onclick="doPing()">Ping</button>
+                <div class="output" id="ping-output"></div>
+            </section>
+
+            <!-- DNS 查询 -->
+            <section class="page" id="page-dns">
+                <h2>DNS 查询</h2>
+                <div class="form-row">
+                    <label>域名</label>
+                    <input type="text" id="dns-domain" value="www.google.com">
+                </div>
+                <button class="btn-primary" onclick="doDns()">查询 A 记录</button>
+                <div class="output" id="dns-output"></div>
+            </section>
+
+            <!-- 路由追踪 -->
+            <section class="page" id="page-traceroute">
+                <h2>路由追踪</h2>
+                <div class="form-row">
+                    <label>目标</label>
+                    <input type="text" id="tr-host" value="8.8.8.8">
+                </div>
+                <button class="btn-primary" onclick="doTraceroute()">TraceRoute</button>
+                <div class="output" id="tr-output"></div>
+            </section>
+
+            <!-- 进制转换 -->
+            <section class="page" id="page-hexconv">
+                <h2>进制转换</h2>
+                <div class="form-row">
+                    <label>数值</label>
+                    <input type="text" id="hex-value" value="255" placeholder="例如: 255, 0xFF, 0b1111">
+                    <label>源进制</label>
+                    <select id="hex-base">
+                        <option value="十六进制">十六进制</option>
+                        <option value="十进制" selected>十进制</option>
+                        <option value="八进制">八进制</option>
+                        <option value="二进制">二进制</option>
+                    </select>
+                </div>
+                <button class="btn-primary" onclick="doHexConvert()">转换</button>
+                <div class="output" id="hex-output"></div>
+            </section>
+
+            <!-- 思科 MCP -->
+            <section class="page" id="page-ciscomcp">
+                <h2>思科 MCP — Cisco Packet Tracer 自动配置</h2>
+
+                <details class="mcp-guide">
+                    <summary>📖 使用说明（首次使用必看）</summary>
+                    <ol>
+                        <li>打开 Cisco Packet Tracer 8.2.1</li>
+                        <li><b>Extensions → Scripting → Configure PT Script Modules...</b></li>
+                        <li>点击 <b>Add</b>，选择 <code>extension/cisco-pt-mcp.pts</code></li>
+                        <li>重启 Packet Tracer</li>
+                        <li>在 PT 中 <b>Extensions → Packet Tracer MCP</b> 打开桥接窗口（状态应显示 connecting）</li>
+                        <li>回到本页面，点击 <b>「连接 PT」</b></li>
+                    </ol>
+                </details>
+
+                <div class="mcp-status-bar">
+                    <span id="mcp-connect-dot" class="mcp-dot offline"></span>
+                    <span id="mcp-connect-text" class="mcp-connect-text">未连接</span>
+                    <button class="btn-small" onclick="ptConnect()">连接 PT</button>
+                    <button class="btn-small" onclick="ptRefreshNetwork()">刷新拓扑</button>
+                    <span class="mcp-info" id="mcp-device-count">设备: -</span>
+                    <span class="mcp-info" id="mcp-link-count">连接: -</span>
+                </div>
+
+                <!-- 快速操作 -->
+                <div class="mcp-section">
+                    <h3>快速操作</h3>
+                    <div class="mcp-actions">
+                        <button class="btn-action" onclick="ptQuickAddDevice()">添加设备</button>
+                        <button class="btn-action" onclick="ptQuickAddLink()">连接设备</button>
+                        <button class="btn-action" onclick="ptQuickPower()">开关电源</button>
+                        <button class="btn-action" onclick="ptQuickDelete()">删除设备</button>
+                    </div>
+                </div>
+
+                <!-- 拓扑预览 -->
+                <div class="mcp-section">
+                    <h3>拓扑预览</h3>
+                    <div id="mcp-topology" class="mcp-topology">
+                        <p class="mcp-hint">点击「刷新拓扑」获取当前网络结构</p>
+                        <div id="mcp-topo-table"></div>
+                    </div>
+                </div>
+
+                <!-- 配置模板生成 -->
+                <div class="mcp-section">
+                    <h3>配置模板生成器</h3>
+                    <div class="mcp-template-form">
+                        <div class="form-row">
+                            <label>模板类型</label>
+                            <select id="mcp-template-select" onchange="ptSelectTemplate()">
+                                <option value="">-- 选择模板 --</option>
+                            </select>
+                            <button class="btn-small" onclick="ptLoadTemplates()" style="margin-left:8px;">刷新</button>
+                        </div>
+                        <div id="mcp-template-fields"></div>
+                        <button class="btn-primary" onclick="ptGenerateConfig()">生成配置</button>
+                        <div id="mcp-template-result" class="mcp-config-output"></div>
+                    </div>
+                </div>
+
+                <!-- 自动配置（AI 生成） -->
+                <div class="mcp-section">
+                    <h3>自动配置（AI 生成）
+                        <button class="btn-small" onclick="ptAiShowSettings()" style="float:right;font-size:12px;">⚙ 设置</button>
+                    </h3>
+                    <div class="form-row">
+                        <label>需求描述</label>
+                        <input type="text" id="ai-req" placeholder="例如：配置 OSPF 动态路由，所有设备互通" style="flex:1;">
+                        <button class="btn-primary" onclick="ptAiAutoConfig()" style="margin-bottom:0;border-color:#d18b6e;color:#d18b6e;">生成</button>
+                    </div>
+                    <div id="ai-progress" class="mcp-config-output"></div>
+                </div>
+
+                <!-- AI 设置弹窗 -->
+                <div id="ai-settings-overlay" class="ai-log-overlay" style="display:none;">
+                    <div class="ai-log-header">
+                        <span>AI API 设置</span>
+                        <button onclick="ptAiCloseSettings()" style="background:none;border:none;color:#aaa;cursor:pointer;font-size:18px;">✕</button>
+                    </div>
+                    <div class="ai-log-content" style="padding:20px;">
+                        <div class="form-row">
+                            <label>API Endpoint</label>
+                            <input type="text" id="ai-api-endpoint" placeholder="例如: https://api.openai.com/v1" style="flex:1;">
+                        </div>
+                        <div class="form-row">
+                            <label>API Key</label>
+                            <input type="password" id="ai-api-key" placeholder="sk-..." style="flex:1;">
+                        </div>
+                        <div class="form-row">
+                            <label>模型</label>
+                            <input type="text" id="ai-api-model" placeholder="gpt-4o / deepseek-chat / ..." style="flex:1;">
+                        </div>
+                        <div style="margin-top:16px;text-align:right;">
+                            <button class="btn-primary" onclick="ptAiSaveSettings()">保存</button>
+                            <span id="ai-settings-status" style="margin-left:12px;color:#4caf50;"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 自然语言转配置 -->
+                <div class="mcp-section">
+                    <h3>自然语言 → IOS 配置</h3>
+                    <div class="mcp-nl-form">
+                        <textarea id="mcp-nl-input" rows="3" placeholder="描述你的需求，例如：&#10;创建 VLAN 10 名称 VLAN10&#10;DHCP 池 POOL1 网络 192.168.10.0 掩码 255.255.255.0&#10;OSPF 进程 ID 1&#10;单臂路由 接口 GigabitEthernet0/0"></textarea>
+                        <button class="btn-primary" onclick="ptParseNl()">解析并生成</button>
+                        <div id="mcp-nl-result" class="mcp-config-output"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 关于 -->
+            <section class="page" id="page-about">
+                <div class="about-card">
+                    <div class="about-icon"><img id="about-icon-img" src="" alt="NetTools" style="width:64px;height:64px;border-radius:12px;display:none;"></div>
+                    <h1>NetTools</h1>
+                    <p class="version">网络工具箱 v1.7</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-header">
+                        <span class="info-icon">📁</span>
+                        <span>项目信息</span>
+                    </div>
+                    <p>Python 3.12 · pywebview · HTML/CSS/JS</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-header">
+                        <span class="info-icon">📄</span>
+                        <span>许可证</span>
+                    </div>
+                    <p>MIT License · 仅供合法网络诊断与学习用途</p>
+                </div>
+                <div class="about-footer">
+                    <p>Powered by <b>Python</b> & <b>pywebview</b> · Created by Codex</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- AI 实时日志悬浮窗 -->
+    <div id="ai-log-overlay" class="ai-log-overlay" style="display:none;">
+        <div class="ai-log-header">
+            <span>实时日志 — AI 自动配置</span>
+            <button onclick="ptAiCloseLog()" style="background:none;border:none;color:#aaa;cursor:pointer;font-size:18px;">✕</button>
+        </div>
+        <div id="ai-log-content" class="ai-log-content"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
