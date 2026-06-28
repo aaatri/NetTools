@@ -1,4 +1,3 @@
-```markdown
 # 🌐 NetTools v1.7
 
 > 基于 **pywebview** 的跨平台网络工具桌面应用，集成 Cisco Packet Tracer 远程控制与 AI 配置生成。
@@ -166,6 +165,8 @@ pyinstaller --clean NetTools.spec
 
 ## 🙏 参考项目
 
+### NetToolsV2（当前版本）
+
 | 项目 | 用途 |
 |------|------|
 | [pywebview](https://github.com/r0x0r/pywebview) | 桌面 GUI 框架（Python + WebView2） |
@@ -177,6 +178,35 @@ pyinstaller --clean NetTools.spec
 | [Cisco Packet Tracer](https://www.netacad.com/courses/packet-tracer) | 网络模拟器（PT 扩展插件目标平台） |
 | [OpenAI API](https://platform.openai.com/docs/api-reference) | AI 配置生成接口（兼容格式） |
 | [Material Icons](https://fonts.google.com/icons) | SVG 导航图标参考 |
+
+### NetTools（旧版 PyQt6 + pywebview）
+
+| 项目 | 用途 |
+|------|------|
+| [pywebview](https://github.com/r0x0r/pywebview) | 桌面 GUI 框架 |
+| [PyQt6](https://pypi.org/project/PyQt6/) | Qt GUI 框架（backup 版本 & Worker/QThread） |
+| [PyInstaller](https://github.com/pyinstaller/pyinstaller) | Python 打包为独立 exe |
+| [ipinfo.io](https://ipinfo.io) | IP 归属地查询 API |
+| [UPX](https://upx.github.io/) | 可执行文件压缩（可选） |
+| ping / tracert | 系统命令（ICMP / 路由追踪） |
+
+### CiscoTools（MCP 服务器，上游 fork）
+
+| 项目 | 用途 |
+|------|------|
+| [cisco-pt-mcp](https://github.com/muhammadbalawal/cisco-pt-mcp) | 上游项目（本 fork 基于 v0.1.6） |
+| [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) | Model Context Protocol 服务端框架 |
+| [python-socketio](https://github.com/miguelgrinberg/python-socketio) | PT 桥接实时通信 |
+| [aiohttp](https://github.com/aio-libs/aiohttp) | HTTP + WebSocket 服务器 |
+| [PyQt6](https://pypi.org/project/PyQt6/) | 独立 GUI 工具（work/gui/） |
+| [Cisco Packet Tracer](https://www.netacad.com/courses/packet-tracer) | 目标网络模拟器 |
+| [Socket.IO JS](https://socket.io/) | PT 插件侧 WebSocket 客户端 |
+| [PyInstaller](https://github.com/pyinstaller/pyinstaller) | 打包 exe |
+| [pyautogui](https://github.com/asweigart/pyautogui) | PT 插件自动构建脚本 |
+| [pytest](https://github.com/pytest-dev/pytest) | 测试框架 |
+| [pytest-asyncio](https://github.com/pytest-dev/pytest-asyncio) | 异步测试支持 |
+| [OpenCode API](https://opencode.ai) | AI 模型接口 |
+| Codex / Claude Desktop / Cursor / Backboard | 目标 MCP 客户端 |
 
 ---
 
@@ -200,4 +230,3 @@ pyinstaller --clean NetTools.spec
 ---
 
 > 🚀 **NetTools v1.7** — 让网络工程师的工具箱更智能、更高效！
-```
