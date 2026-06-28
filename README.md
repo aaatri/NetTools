@@ -188,22 +188,11 @@ pyinstaller --clean NetTools.spec
 | [Cisco Packet Tracer](https://www.netacad.com/courses/packet-tracer) | 网络模拟器（PT 扩展插件目标平台） |
 | [OpenAI API](https://platform.openai.com/docs/api-reference) | AI 配置生成接口（兼容格式） |
 | [Material Icons](https://fonts.google.com/icons) | SVG 导航图标参考 |
-
-### NetTools（旧版 PyQt6 + pywebview）
-
-| 项目 | 用途 |
-|------|------|
 | [pywebview](https://github.com/r0x0r/pywebview) | 桌面 GUI 框架 |
 | [PyQt6](https://pypi.org/project/PyQt6/) | Qt GUI 框架（backup 版本 & Worker/QThread） |
 | [PyInstaller](https://github.com/pyinstaller/pyinstaller) | Python 打包为独立 exe |
 | [ipinfo.io](https://ipinfo.io) | IP 归属地查询 API |
 | [UPX](https://upx.github.io/) | 可执行文件压缩（可选） |
-| ping / tracert | 系统命令（ICMP / 路由追踪） |
-
-### CiscoTools（MCP 服务器，上游 fork）
-
-| 项目 | 用途 |
-|------|------|
 | [cisco-pt-mcp](https://github.com/muhammadbalawal/cisco-pt-mcp) | 上游项目（本 fork 基于 v0.1.6） |
 | [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) | Model Context Protocol 服务端框架 |
 | [python-socketio](https://github.com/miguelgrinberg/python-socketio) | PT 桥接实时通信 |
